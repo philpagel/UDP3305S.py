@@ -19,37 +19,41 @@ class channel:
         self.V_max = V_max
         self.A_max = A_max
 
-    def set_voltage(self, value):
-        "set output voltage [V]"
+    @property
+    def voltage(self):
+        "output voltage [V]"
+        return float(self.connection.query(f"APPLY? {self.name},VOLT").split(",")[1])
 
+    @voltage.setter
+    def voltage(self, value):
         if 0 < value < self.V_max:
             self.connection.write(f"APPLY {self.name},{value}V")
         else:
             raise ValueError(f"Voltage must be in [0, {self.V_max}V")
-
-    def get_voltage(self):
-        "get output voltage [V]"
-
-        return float(self.connection.query(f"APPLY? {self.name},VOLT").split(",")[1])
-
-    def set_current(self, value):
-        "set current limit [A]"
-
-        if 0 < value < self.A_max:
-            self.connection.write(f"APPLY {self.name},{value}A")
-        else:
-            raise ValueError(f"Current must be in [0, {self.A_max}V")
-
-    def get_current(self):
-        "get current limit [A]"
-
+    
+    @property
+    def current(self):
+        "output current limit [A]"
         return (
             float(self.connection.query(f"APPLY? {self.name},CURRENT").split(",")[1])
         )
 
-    def set_OVP(self, value, state=1):
-        "set over voltage protection (OVP) value [V]"
+    @current.setter
+    def current(self, value):
+        if 0 < value < self.A_max:
+            self.connection.write(f"APPLY {self.name},{value}A")
+        else:
+            raise ValueError(f"Current must be in [0, {self.A_max}V")
+    
+    @property
+    def OVP(self):
+        "over voltage protection (OVP) value [V]"
+        value = float(self.connection.query(f"OUTPUT:OVP:VALUE? {self.name}"))
+        state = self.connection.query(f"OUTPUT:OVP:STATE? {self.name}")
+        return (value, state)
 
+    @OVP.setter
+    def OVP(self, value, state=1):
         if 0 < value < self.V_max:
             self.connection.write(f"OUTPUT:OVP:VALUE {self.name},{value}")
         else:
@@ -60,16 +64,15 @@ class channel:
         else:
             raise ValueError(f"'{state}' is not a valid OVP state.")
 
-    def get_OVP(self):
-        "return over voltage protection (OVP) value [V]"
-
-        value = float(self.connection.query(f"OUTPUT:OVP:VALUE? {self.name}"))
-        state = self.connection.query(f"OUTPUT:OVP:STATE? {self.name}")
+    @property
+    def OCP(self):
+        "over current protection (OCP) value [A]"
+        value = float(self.connection.query(f"OUTPUT:OCP:VALUE? {self.name}"))
+        state = self.connection.query(f"OUTPUT:OCP:STATE? {self.name}")
         return (value, state)
-
-    def set_OCP(self, value, state=1):
-        "set over current protection (OCP) value [A]"
-
+    
+    @OCP.setter
+    def OCP(self, value, state=1):
         if 0 < value < self.A_max:
             self.connection.write(f"OUTPUT:OCP:VALUE {self.name},{value}")
         else:
@@ -79,13 +82,6 @@ class channel:
             self.connection.write(f"OUTPUT:OCP:STATE {self.name},{state}")
         else:
             raise ValueError(f"'{state}' is not a valid OCP state.")
-
-    def get_OCP(self):
-        "return over current protection (OCP) value [A]"
-
-        value = float(self.connection.query(f"OUTPUT:OCP:VALUE? {self.name}"))
-        state = self.connection.query(f"OUTPUT:OCP:STATE? {self.name}")
-        return (value, state)
 
     def read_voltage(self):
         "read (measure) output voltage [V]"

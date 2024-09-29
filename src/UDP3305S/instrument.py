@@ -52,13 +52,13 @@ RID (Resource ID) as defined by pyVISA. E.g.:
     def __str__(self):
         return f"{self.idn['model']} 3-channel lab power supply\nSN:{self.idn['SN']}\nFirmware: {self.idn['firmware']}"
 
-    def get_mode(self):
-        "return output mode (NORMAL | SER | PARA)"
+    @property
+    def mode(self):
+        "output mode (NORMAL | SER | PARA)"
         return self.connection.query("SOURCE:MODE?")
 
-    def set_mode(self, mode):
-        "set output mode (NORMAL | SER | PARA)"
-
+    @mode.setter
+    def mode(self, mode):
         if mode.upper() in ("NORMAL", "NORM", "SER", "PARA"):
             self.connection.write(f"SOURCE:MODE {mode}")
         else:
