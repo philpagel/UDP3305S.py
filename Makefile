@@ -30,16 +30,16 @@ test:
 
 
 dep-dev:
-	python -m pip install -r requirements-dev.txt --upgrade
+	python3 -m pip install -r requirements-dev.txt --upgrade
 .PHONEY: dep-dev
 
 build: 
-	python -m build
+	python3 -m build
 .PHONEY: build
 
 
 install: 
-	python -m pip install dist/UDP3305S$(VERSION).tar.gz
+	python3 -m pip install dist/UDP3305S$(VERSION).tar.gz
 .PHONEY: install
 
 
