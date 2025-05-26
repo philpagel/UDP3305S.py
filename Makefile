@@ -19,8 +19,10 @@ dep:
 
 test:
 	@echo "Please follow these steps:\n"
-	@echo "    edit 'src/tests/testconfig.py' so it matches your USB device"
-	@echo "    Turn on the device\n"
+	@echo "    1. Ensure that the settings in 'src/tests/testconfig.py'"
+	@echo "       match your device connection/address"
+	@echo "    2. Make sure nothing is connected to the device outputs"
+	@echo "    3. Turn on the device\n"
 	@echo "Hit ENTER to start the test suite"
 	@read RESPONSE
 	pytest -v src/tests/UDP3305S_test.py
