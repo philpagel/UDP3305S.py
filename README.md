@@ -2,6 +2,10 @@
 
 Python class for controlling Uni-T UDP3305S or UDP3305S-E lab power supply units.
 
+<img src="img/udp3305s.jpg" width=288>
+
+
+
 # In a nutshell
 
     #!/bin/env python3
@@ -56,6 +60,20 @@ UDP3305S, LINUX.
 | List mode                            | —      |
 | Delayer mode                         | —      |
 | Trigger setup                        | —      |
+
+
+# Installation
+
+1. Download the latest release package (` udp3305s-XXX.tar.gz `) from github.
+2. If you want to install in a virtual environment, first, create and activate it:
+```
+python -m venv .venv
+source .venv/bin/activate
+```
+3. Install the package (replace *XXX* with the correct number)
+```
+python -m pip install udp3305s-XXX.tar.gz
+```
 
 
 # Reference
