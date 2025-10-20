@@ -2,6 +2,10 @@
 
 Python class for controlling Uni-T UDP3305S or UDP3305S-E lab power supply units.
 
+<img src="img/udp3305s.jpg" width=288>
+
+
+
 # In a nutshell
 
     #!/bin/env python3
