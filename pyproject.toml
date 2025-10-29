@@ -1,3 +1,27 @@
 [build-system]
 requires = ["setuptools >= 45.2.0", "wheel != 0.1"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name="UDP3305S"
+version="0.1"
+description="Remote controlling Uni-T UDP3305S / UDP3305S-E lab power supplies"
+dependencies= [
+   "pyvisa",
+   "pyvisa-py",
+   "pyserial",
+]
+requires-python = ">=3.10,<4"
+authors = [{name = "Philipp Pagel", email = "phil@techbotch.org"}]
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["Lab power supply", "SCPI", "remote control"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python"
+]
+
+[project.urls]
+Repository="https://github.com/philpagel/UDP3305S.py"
+
