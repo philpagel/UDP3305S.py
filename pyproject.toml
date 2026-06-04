@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name="UDP3305S"
-version="0.1"
+version="0.2"
 description="Remote controlling Uni-T UDP3305S / UDP3305S-E lab power supplies"
 dependencies= [
    "pyvisa",
